@@ -1,9 +1,13 @@
 package com.ruoyi.system.service.impl;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import com.ruoyi.common.core.utils.DateUtils;
 import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.system.domain.NdtTruckType;
+import com.ruoyi.system.domain.vo.NdtTruckVo;
 import com.ruoyi.system.mapper.NdtTruckTypeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +52,23 @@ public class NdtTruckServiceImpl implements INdtTruckService
     public List<NdtTruck> selectNdtTruckList(NdtTruck ndtTruck)
     {
         return ndtTruckMapper.selectNdtTruckList(ndtTruck);
+    }
+
+    @Override
+    public List<NdtTruckVo> selectNdtTruckListVo(NdtTruck ndtTruck) {
+
+       return ndtTruckMapper.selectNdtTruckList(ndtTruck).stream()
+                .map(truck -> {
+                    NdtTruckVo ndtTruckVo = new NdtTruckVo();
+                    ndtTruckVo.setId(truck.getId());
+                    ndtTruckVo.setLicensePlate(truck.getLicensePlate());
+                    ndtTruckVo.setTruckTypeName(truck.getTruckTypeName());
+                    ndtTruckVo.setStatus(truck.getStatus());
+                    ndtTruckVo.setDeviceGpsId(truck.getDeviceGpsId());
+                    ndtTruckVo.setAllowableLoad(truck.getAllowableLoad());
+                    ndtTruckVo.setAllowableVolume(truck.getAllowableVolume());
+                    return ndtTruckVo;
+                }).collect(Collectors.toList());
     }
 
     /**

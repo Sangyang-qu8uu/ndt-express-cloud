@@ -1,12 +1,14 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.ruoyi.common.core.utils.DateUtils;
 import com.ruoyi.common.core.utils.SnowflakeUtils;
 import com.ruoyi.common.security.utils.SecurityUtils;
+import com.ruoyi.system.domain.NdtTruck;
 import com.ruoyi.system.domain.vo.NdtTruckTypeCheckVo;
 import com.ruoyi.system.domain.vo.NdtTruckTypeVo;
 import com.ruoyi.system.mapper.NdtTruckMapper;
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.NdtTruckTypeMapper;
 import com.ruoyi.system.domain.NdtTruckType;
 import com.ruoyi.system.service.INdtTruckTypeService;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 /**
  * 车型管理Service业务层处理
@@ -62,15 +66,21 @@ public class NdtTruckTypeServiceImpl implements INdtTruckTypeService
 
         return ndtTruckTypes.stream()
                 .map(truckType -> {
+
+                    Long id = truckType.getId();
+                    NdtTruck ndtTruck = new NdtTruck();
+                    ndtTruck.setTruckTypeId(id);
+                    long count = ndtTruckMapper.selectNdtTruckList(ndtTruck).size();
+
                     NdtTruckTypeVo vo = new NdtTruckTypeVo();
                     vo.setName(truckType.getName());
-                    vo.setId(vo.getId());
+                    vo.setId(truckType.getId());
                     vo.setAllowableLoad(truckType.getAllowableLoad());
                     vo.setAllowableVolume(truckType.getAllowableVolume());
                     vo.setMeasureHigh(truckType.getMeasureHigh());
                     vo.setMeasureWidth(truckType.getMeasureWidth());
                     vo.setMeasureLong(truckType.getMeasureLong());
-
+                    vo.setNum(count);
                     // 根据需要复制其他属性
                     return vo;
                 }).collect(Collectors.toList());
@@ -103,10 +113,28 @@ public class NdtTruckTypeServiceImpl implements INdtTruckTypeService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updateNdtTruckType(NdtTruckType ndtTruckType)
     {
         ndtTruckType.setUpdateTime(DateUtils.getNowDate());
         ndtTruckType.setCreateBy(SecurityUtils.getUsername());
+        //修改需要同步车辆表
+        Long ndtTruckTypeId = ndtTruckType.getId();
+        String newTruckName = ndtTruckType.getName();
+
+        NdtTruck ndtTruck = new NdtTruck();
+        ndtTruck.setTruckTypeId(ndtTruckTypeId);
+        List<NdtTruck> list = ndtTruckMapper.selectNdtTruckList(ndtTruck);
+        if (!CollectionUtils.isEmpty(list)){
+            List<Long> idList = list.stream().map(NdtTruck::getId).collect(Collectors.toList());
+
+            HashMap<String,Object>map=new HashMap<>(idList.size());
+            map.put("ids",idList);
+            map.put("truckTypeName",newTruckName);
+            map.put("updateBy",SecurityUtils.getUsername());
+            map.put("updateTime",DateUtils.getNowDate());
+            ndtTruckMapper.updateTrucksBatchByIds(map);
+        }
         return ndtTruckTypeMapper.updateNdtTruckType(ndtTruckType);
     }
 

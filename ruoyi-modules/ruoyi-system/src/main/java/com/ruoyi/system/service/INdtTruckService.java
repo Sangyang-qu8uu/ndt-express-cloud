@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 import com.ruoyi.system.domain.NdtTruck;
+import com.ruoyi.system.domain.vo.NdtTruckVo;
 
 /**
  * 车辆管理Service接口
@@ -26,6 +27,14 @@ public interface INdtTruckService
      * @return 车辆管理集合
      */
     public List<NdtTruck> selectNdtTruckList(NdtTruck ndtTruck);
+
+    /**
+     * 查询车辆管理列表
+     *
+     * @param ndtTruck 车辆管理
+     * @return 车辆管理集合
+     */
+    public List<NdtTruckVo> selectNdtTruckListVo(NdtTruck ndtTruck);
 
     /**
      * 新增车辆管理

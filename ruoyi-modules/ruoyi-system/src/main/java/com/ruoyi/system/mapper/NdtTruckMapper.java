@@ -1,6 +1,8 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.system.domain.NdtTruck;
 
 /**
@@ -58,4 +60,12 @@ public interface NdtTruckMapper
      * @return 结果
      */
     public int deleteNdtTruckByIds(Long[] ids);
+
+    /**
+     * 批量修改车辆的类型名字
+     *
+     * @param map
+     * @return 结果
+     */
+    public int updateTrucksBatchByIds(Map<String,Object>map);
 }

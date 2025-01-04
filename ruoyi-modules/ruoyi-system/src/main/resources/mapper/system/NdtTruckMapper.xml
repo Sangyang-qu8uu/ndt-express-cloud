@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.NdtTruckMapper">
-    
+
     <resultMap type="NdtTruck" id="NdtTruckResult">
         <result property="id"    column="id"    />
         <result property="truckTypeId"    column="truck_type_id"    />
@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectNdtTruckList" parameterType="NdtTruck" resultMap="NdtTruckResult">
         <include refid="selectNdtTruckVo"/>
-        <where>  
+        <where>
             <if test="truckTypeId != null "> and truck_type_id = #{truckTypeId}</if>
             <if test="truckTypeName != null  and truckTypeName != ''"> and truck_type_name like concat('%', #{truckTypeName}, '%')</if>
             <if test="licensePlate != null  and licensePlate != ''"> and license_plate = #{licensePlate}</if>
@@ -39,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null "> and status = #{status}</if>
         </where>
     </select>
-    
+
     <select id="selectNdtTruckById" parameterType="Long" resultMap="NdtTruckResult">
         <include refid="selectNdtTruckVo"/>
         where id = #{id}
@@ -106,9 +106,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteNdtTruckByIds" parameterType="String">
-        delete from ndt_truck where id in 
+        delete from ndt_truck where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
+
+    <update id="updateTrucksBatchByIds" parameterType="java.util.Map">
+        UPDATE ndt_truck
+        SET
+        truck_type_name=#{truckTypeName},
+        update_time = #{updateTime},
+        update_by = #{updateBy}
+
+        WHERE
+        id IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
 </mapper>
