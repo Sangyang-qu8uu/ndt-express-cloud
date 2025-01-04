@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.NdtTruckMapper">
+    
+    <resultMap type="NdtTruck" id="NdtTruckResult">
+        <result property="id"    column="id"    />
+        <result property="truckTypeId"    column="truck_type_id"    />
+        <result property="truckTypeName"    column="truck_type_name"    />
+        <result property="licensePlate"    column="license_plate"    />
+        <result property="driverNum"    column="driver_num"    />
+        <result property="driverName"    column="driver_name"    />
+        <result property="deviceGpsId"    column="device_gps_id"    />
+        <result property="allowableLoad"    column="allowable_load"    />
+        <result property="allowableVolume"    column="allowable_volume"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectNdtTruckVo">
+        select id, truck_type_id, truck_type_name, license_plate, driver_num, driver_name, device_gps_id, allowable_load, allowable_volume, status, create_by, create_time, update_by, update_time from ndt_truck
+    </sql>
+
+    <select id="selectNdtTruckList" parameterType="NdtTruck" resultMap="NdtTruckResult">
+        <include refid="selectNdtTruckVo"/>
+        <where>  
+            <if test="truckTypeId != null "> and truck_type_id = #{truckTypeId}</if>
+            <if test="truckTypeName != null  and truckTypeName != ''"> and truck_type_name like concat('%', #{truckTypeName}, '%')</if>
+            <if test="licensePlate != null  and licensePlate != ''"> and license_plate = #{licensePlate}</if>
+            <if test="driverNum != null "> and driver_num = #{driverNum}</if>
+            <if test="driverName != null  and driverName != ''"> and driver_name like concat('%', #{driverName}, '%')</if>
+            <if test="deviceGpsId != null "> and device_gps_id = #{deviceGpsId}</if>
+            <if test="allowableLoad != null  and allowableLoad != ''"> and allowable_load = #{allowableLoad}</if>
+            <if test="allowableVolume != null  and allowableVolume != ''"> and allowable_volume = #{allowableVolume}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectNdtTruckById" parameterType="Long" resultMap="NdtTruckResult">
+        <include refid="selectNdtTruckVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertNdtTruck" parameterType="NdtTruck">
+        insert into ndt_truck
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="truckTypeId != null">truck_type_id,</if>
+            <if test="truckTypeName != null">truck_type_name,</if>
+            <if test="licensePlate != null">license_plate,</if>
+            <if test="driverNum != null">driver_num,</if>
+            <if test="driverName != null">driver_name,</if>
+            <if test="deviceGpsId != null">device_gps_id,</if>
+            <if test="allowableLoad != null">allowable_load,</if>
+            <if test="allowableVolume != null">allowable_volume,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="truckTypeId != null">#{truckTypeId},</if>
+            <if test="truckTypeName != null">#{truckTypeName},</if>
+            <if test="licensePlate != null">#{licensePlate},</if>
+            <if test="driverNum != null">#{driverNum},</if>
+            <if test="driverName != null">#{driverName},</if>
+            <if test="deviceGpsId != null">#{deviceGpsId},</if>
+            <if test="allowableLoad != null">#{allowableLoad},</if>
+            <if test="allowableVolume != null">#{allowableVolume},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateNdtTruck" parameterType="NdtTruck">
+        update ndt_truck
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="truckTypeId != null">truck_type_id = #{truckTypeId},</if>
+            <if test="truckTypeName != null">truck_type_name = #{truckTypeName},</if>
+            <if test="licensePlate != null">license_plate = #{licensePlate},</if>
+            <if test="driverNum != null">driver_num = #{driverNum},</if>
+            <if test="driverName != null">driver_name = #{driverName},</if>
+            <if test="deviceGpsId != null">device_gps_id = #{deviceGpsId},</if>
+            <if test="allowableLoad != null">allowable_load = #{allowableLoad},</if>
+            <if test="allowableVolume != null">allowable_volume = #{allowableVolume},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteNdtTruckById" parameterType="Long">
+        delete from ndt_truck where id = #{id}
+    </delete>
+
+    <delete id="deleteNdtTruckByIds" parameterType="String">
+        delete from ndt_truck where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
