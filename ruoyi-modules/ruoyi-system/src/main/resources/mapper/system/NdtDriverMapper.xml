@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.NdtDriverMapper">
+    
+    <resultMap type="NdtDriver" id="NdtDriverResult">
+        <result property="id"    column="id"    />
+        <result property="driverAccount"    column="driver_account"    />
+        <result property="phone"    column="phone"    />
+        <result property="courierName"    column="courier_name"    />
+        <result property="workStatus"    column="work_status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+
+    <sql id="selectNdtDriverVo">
+        select id, driver_account, phone, courier_name, work_status, create_by, create_time, update_by, update_time from ndt_driver
+    </sql>
+
+    <select id="selectNdtDriverList" parameterType="NdtDriver" resultMap="NdtDriverResult">
+        <include refid="selectNdtDriverVo"/>
+        <where>  
+            <if test="driverAccount != null  and driverAccount != ''"> and driver_account = #{driverAccount}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="courierName != null  and courierName != ''"> and courier_name like concat('%', #{courierName}, '%')</if>
+            <if test="workStatus != null "> and work_status = #{workStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectNdtDriverById" parameterType="Long" resultMap="NdtDriverResult">
+        <include refid="selectNdtDriverVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertNdtDriver" parameterType="NdtDriver" useGeneratedKeys="true" keyProperty="id">
+        insert into ndt_driver
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="driverAccount != null">driver_account,</if>
+            <if test="phone != null">phone,</if>
+            <if test="courierName != null">courier_name,</if>
+            <if test="workStatus != null">work_status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="driverAccount != null">#{driverAccount},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="courierName != null">#{courierName},</if>
+            <if test="workStatus != null">#{workStatus},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateNdtDriver" parameterType="NdtDriver">
+        update ndt_driver
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="driverAccount != null">driver_account = #{driverAccount},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="courierName != null">courier_name = #{courierName},</if>
+            <if test="workStatus != null">work_status = #{workStatus},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteNdtDriverById" parameterType="Long">
+        delete from ndt_driver where id = #{id}
+    </delete>
+
+    <delete id="deleteNdtDriverByIds" parameterType="String">
+        delete from ndt_driver where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
