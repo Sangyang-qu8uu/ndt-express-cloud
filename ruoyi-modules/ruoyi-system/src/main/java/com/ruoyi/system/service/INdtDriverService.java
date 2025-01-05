@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 import com.ruoyi.system.domain.NdtDriver;
+import com.ruoyi.system.domain.vo.NdtDriverVo;
 
 /**
  * 司机管理Service接口
@@ -26,6 +27,15 @@ public interface INdtDriverService
      * @return 司机管理集合
      */
     public List<NdtDriver> selectNdtDriverList(NdtDriver ndtDriver);
+
+
+    /**
+     * 查询司机管理列表
+     *
+     * @param ndtDriver 司机管理
+     * @return 司机管理集合
+     */
+    public List<NdtDriverVo> selectNdtDriverListVo(NdtDriver ndtDriver);
 
     /**
      * 新增司机管理

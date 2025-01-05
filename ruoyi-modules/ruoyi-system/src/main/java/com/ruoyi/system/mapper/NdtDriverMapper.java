@@ -2,6 +2,7 @@ package com.ruoyi.system.mapper;
 
 import java.util.List;
 import com.ruoyi.system.domain.NdtDriver;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 司机管理Mapper接口
@@ -11,6 +12,8 @@ import com.ruoyi.system.domain.NdtDriver;
  */
 public interface NdtDriverMapper 
 {
+
+
     /**
      * 查询司机管理
      * 

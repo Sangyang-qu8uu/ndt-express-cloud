@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateTime"    column="update_time"    />
     </resultMap>
 
+
     <sql id="selectNdtDriverVo">
         select id, driver_account, phone, courier_name, work_status, create_by, create_time, update_by, update_time from ndt_driver
     </sql>

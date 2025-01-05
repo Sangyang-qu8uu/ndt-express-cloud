@@ -3,6 +3,8 @@ package com.ruoyi.system.controller;
 import java.util.List;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.system.domain.vo.NdtDriverVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,7 +45,7 @@ public class NdtDriverController extends BaseController
     public TableDataInfo list(NdtDriver ndtDriver)
     {
         startPage();
-        List<NdtDriver> list = ndtDriverService.selectNdtDriverList(ndtDriver);
+        List<NdtDriverVo> list = ndtDriverService.selectNdtDriverListVo(ndtDriver);
         return getDataTable(list);
     }
 

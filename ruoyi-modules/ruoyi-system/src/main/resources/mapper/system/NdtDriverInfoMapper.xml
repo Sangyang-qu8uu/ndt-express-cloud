@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.NdtDriverInfoMapper">
+    
+    <resultMap type="NdtDriverInfo" id="NdtDriverInfoResult">
+        <result property="id"    column="id"    />
+        <result property="driverId"    column="driver_id"    />
+        <result property="licenseNumber"    column="license_number"    />
+        <result property="allowableType"    column="allowable_type"    />
+        <result property="driverAge"    column="driver_age"    />
+        <result property="validPeriod"    column="valid_period"    />
+        <result property="licenseType"    column="license_type"    />
+        <result property="picture"    column="picture"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <select id="selectNdtDriverInfoByIds" resultMap="NdtDriverInfoResult">
+        <include refid="selectNdtDriverInfoVo"/>
+        WHERE driver_id IN
+        <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    <sql id="selectNdtDriverInfoVo">
+        select id, driver_id, license_number, allowable_type, driver_age, valid_period, license_type, picture, create_by, create_time, update_by, update_time from ndt_driver_info
+    </sql>
+
+    <select id="selectNdtDriverInfoList" parameterType="NdtDriverInfo" resultMap="NdtDriverInfoResult">
+        <include refid="selectNdtDriverInfoVo"/>
+        <where>  
+            <if test="driverId != null "> and driver_id = #{driverId}</if>
+            <if test="licenseNumber != null "> and license_number = #{licenseNumber}</if>
+            <if test="allowableType != null  and allowableType != ''"> and allowable_type = #{allowableType}</if>
+            <if test="driverAge != null  and driverAge != ''"> and driver_age = #{driverAge}</if>
+            <if test="validPeriod != null  and validPeriod != ''"> and valid_period = #{validPeriod}</if>
+            <if test="licenseType != null  and licenseType != ''"> and license_type = #{licenseType}</if>
+            <if test="picture != null  and picture != ''"> and picture = #{picture}</if>
+        </where>
+    </select>
+    
+    <select id="selectNdtDriverInfoById" parameterType="Long" resultMap="NdtDriverInfoResult">
+        <include refid="selectNdtDriverInfoVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertNdtDriverInfo" parameterType="NdtDriverInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into ndt_driver_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="driverId != null">driver_id,</if>
+            <if test="licenseNumber != null">license_number,</if>
+            <if test="allowableType != null">allowable_type,</if>
+            <if test="driverAge != null">driver_age,</if>
+            <if test="validPeriod != null">valid_period,</if>
+            <if test="licenseType != null">license_type,</if>
+            <if test="picture != null">picture,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="driverId != null">#{driverId},</if>
+            <if test="licenseNumber != null">#{licenseNumber},</if>
+            <if test="allowableType != null">#{allowableType},</if>
+            <if test="driverAge != null">#{driverAge},</if>
+            <if test="validPeriod != null">#{validPeriod},</if>
+            <if test="licenseType != null">#{licenseType},</if>
+            <if test="picture != null">#{picture},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateNdtDriverInfo" parameterType="NdtDriverInfo">
+        update ndt_driver_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="driverId != null">driver_id = #{driverId},</if>
+            <if test="licenseNumber != null">license_number = #{licenseNumber},</if>
+            <if test="allowableType != null">allowable_type = #{allowableType},</if>
+            <if test="driverAge != null">driver_age = #{driverAge},</if>
+            <if test="validPeriod != null">valid_period = #{validPeriod},</if>
+            <if test="licenseType != null">license_type = #{licenseType},</if>
+            <if test="picture != null">picture = #{picture},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteNdtDriverInfoById" parameterType="Long">
+        delete from ndt_driver_info where id = #{id}
+    </delete>
+
+    <delete id="deleteNdtDriverInfoByIds" parameterType="String">
+        delete from ndt_driver_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectNdtDriverInfoByDriverId" resultType="com.ruoyi.system.domain.NdtDriverInfo">
+        <include refid="selectNdtDriverInfoVo"/>
+        where driver_id = #{driverId}
+    </select>
+</mapper>
