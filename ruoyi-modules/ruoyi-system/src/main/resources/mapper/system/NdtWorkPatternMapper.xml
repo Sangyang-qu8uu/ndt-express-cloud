@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.NdtWorkPatternMapper">
+    
+    <resultMap type="NdtWorkPattern" id="NdtWorkPatternResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="userType"    column="user_type"    />
+        <result property="workPatternType"    column="work_pattern_type"    />
+        <result property="monday"    column="monday"    />
+        <result property="tuesday"    column="tuesday"    />
+        <result property="wednesday"    column="wednesday"    />
+        <result property="thursday"    column="thursday"    />
+        <result property="friday"    column="friday"    />
+        <result property="saturday"    column="saturday"    />
+        <result property="sunday"    column="sunday"    />
+        <result property="workDayNum"    column="work_day_num"    />
+        <result property="restDayNum"    column="rest_day_num"    />
+        <result property="workStartMinute1"    column="work_start_minute1"    />
+        <result property="workEndMinute1"    column="work_end_minute1"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectNdtWorkPatternVo">
+        select id, name, user_type, work_pattern_type, monday, tuesday, wednesday, thursday, friday, saturday, sunday, work_day_num, rest_day_num, work_start_minute1, work_end_minute1, status, create_by, create_time, update_by, update_time from ndt_work_pattern
+    </sql>
+
+    <select id="selectNdtWorkPatternList" parameterType="NdtWorkPattern" resultMap="NdtWorkPatternResult">
+        <include refid="selectNdtWorkPatternVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="userType != null  and userType != ''"> and user_type = #{userType}</if>
+            <if test="workPatternType != null  and workPatternType != ''"> and work_pattern_type = #{workPatternType}</if>
+            <if test="monday != null  and monday != ''"> and monday = #{monday}</if>
+            <if test="tuesday != null  and tuesday != ''"> and tuesday = #{tuesday}</if>
+            <if test="wednesday != null  and wednesday != ''"> and wednesday = #{wednesday}</if>
+            <if test="thursday != null  and thursday != ''"> and thursday = #{thursday}</if>
+            <if test="friday != null  and friday != ''"> and friday = #{friday}</if>
+            <if test="saturday != null  and saturday != ''"> and saturday = #{saturday}</if>
+            <if test="sunday != null  and sunday != ''"> and sunday = #{sunday}</if>
+            <if test="workDayNum != null "> and work_day_num = #{workDayNum}</if>
+            <if test="restDayNum != null "> and rest_day_num = #{restDayNum}</if>
+            <if test="workStartMinute1 != null  and workStartMinute1 != ''"> and work_start_minute1 = #{workStartMinute1}</if>
+            <if test="workEndMinute1 != null  and workEndMinute1 != ''"> and work_end_minute1 = #{workEndMinute1}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectNdtWorkPatternById" parameterType="Long" resultMap="NdtWorkPatternResult">
+        <include refid="selectNdtWorkPatternVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertNdtWorkPattern" parameterType="NdtWorkPattern">
+        insert into ndt_work_pattern
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="userType != null and userType != ''">user_type,</if>
+            <if test="workPatternType != null and workPatternType != ''">work_pattern_type,</if>
+            <if test="monday != null and monday != ''">monday,</if>
+            <if test="tuesday != null and tuesday != ''">tuesday,</if>
+            <if test="wednesday != null and wednesday != ''">wednesday,</if>
+            <if test="thursday != null and thursday != ''">thursday,</if>
+            <if test="friday != null and friday != ''">friday,</if>
+            <if test="saturday != null and saturday != ''">saturday,</if>
+            <if test="sunday != null and sunday != ''">sunday,</if>
+            <if test="workDayNum != null">work_day_num,</if>
+            <if test="restDayNum != null">rest_day_num,</if>
+            <if test="workStartMinute1 != null">work_start_minute1,</if>
+            <if test="workEndMinute1 != null">work_end_minute1,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="userType != null and userType != ''">#{userType},</if>
+            <if test="workPatternType != null and workPatternType != ''">#{workPatternType},</if>
+            <if test="monday != null and monday != ''">#{monday},</if>
+            <if test="tuesday != null and tuesday != ''">#{tuesday},</if>
+            <if test="wednesday != null and wednesday != ''">#{wednesday},</if>
+            <if test="thursday != null and thursday != ''">#{thursday},</if>
+            <if test="friday != null and friday != ''">#{friday},</if>
+            <if test="saturday != null and saturday != ''">#{saturday},</if>
+            <if test="sunday != null and sunday != ''">#{sunday},</if>
+            <if test="workDayNum != null">#{workDayNum},</if>
+            <if test="restDayNum != null">#{restDayNum},</if>
+            <if test="workStartMinute1 != null">#{workStartMinute1},</if>
+            <if test="workEndMinute1 != null">#{workEndMinute1},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateNdtWorkPattern" parameterType="NdtWorkPattern">
+        update ndt_work_pattern
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="userType != null and userType != ''">user_type = #{userType},</if>
+            <if test="workPatternType != null and workPatternType != ''">work_pattern_type = #{workPatternType},</if>
+            <if test="monday != null and monday != ''">monday = #{monday},</if>
+            <if test="tuesday != null and tuesday != ''">tuesday = #{tuesday},</if>
+            <if test="wednesday != null and wednesday != ''">wednesday = #{wednesday},</if>
+            <if test="thursday != null and thursday != ''">thursday = #{thursday},</if>
+            <if test="friday != null and friday != ''">friday = #{friday},</if>
+            <if test="saturday != null and saturday != ''">saturday = #{saturday},</if>
+            <if test="sunday != null and sunday != ''">sunday = #{sunday},</if>
+            <if test="workDayNum != null">work_day_num = #{workDayNum},</if>
+            <if test="restDayNum != null">rest_day_num = #{restDayNum},</if>
+            <if test="workStartMinute1 != null">work_start_minute1 = #{workStartMinute1},</if>
+            <if test="workEndMinute1 != null">work_end_minute1 = #{workEndMinute1},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteNdtWorkPatternById" parameterType="Long">
+        delete from ndt_work_pattern where id = #{id}
+    </delete>
+
+    <delete id="deleteNdtWorkPatternByIds" parameterType="String">
+        delete from ndt_work_pattern where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
