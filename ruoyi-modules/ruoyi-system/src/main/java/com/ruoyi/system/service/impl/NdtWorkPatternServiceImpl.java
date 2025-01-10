@@ -89,6 +89,7 @@ public class NdtWorkPatternServiceImpl implements INdtWorkPatternService
     public int updateNdtWorkPattern(NdtWorkPattern ndtWorkPattern)
     {
         ndtWorkPattern.setUpdateTime(DateUtils.getNowDate());
+        ndtWorkPattern.setUpdateBy(SecurityUtils.getUsername());
         return ndtWorkPatternMapper.updateNdtWorkPattern(ndtWorkPattern);
     }
 
