@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.NdtWorkSchedulingMapper">
+
+    <resultMap type="NdtWorkScheduling" id="NdtWorkSchedulingResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="userType"    column="user_type"    />
+        <result property="employeeNumber"    column="employee_number"    />
+        <result property="name"    column="name"    />
+        <result property="phone"    column="phone"    />
+        <result property="workPatternId"    column="work_pattern_id"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectNdtWorkSchedulingVo">
+        select id, user_id, user_type, employee_number, name, phone, work_pattern_id, status, create_by, create_time, update_by, update_time from ndt_work_scheduling
+    </sql>
+
+    <select id="selectNdtWorkSchedulingList" parameterType="NdtWorkScheduling" resultMap="NdtWorkSchedulingResult">
+        <include refid="selectNdtWorkSchedulingVo"/>
+        <where>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="userType != null "> and user_type = #{userType}</if>
+            <if test="employeeNumber != null  and employeeNumber != ''"> and employee_number = #{employeeNumber}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="workPatternId != null  and workPatternId != ''"> and work_pattern_id = #{workPatternId}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+
+    <select id="selectNdtWorkSchedulingById" parameterType="Long" resultMap="NdtWorkSchedulingResult">
+        <include refid="selectNdtWorkSchedulingVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertNdtWorkScheduling" parameterType="NdtWorkScheduling" useGeneratedKeys="true" keyProperty="id">
+        insert into ndt_work_scheduling
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="userType != null">user_type,</if>
+            <if test="employeeNumber != null">employee_number,</if>
+            <if test="name != null">name,</if>
+            <if test="phone != null">phone,</if>
+            <if test="workPatternId != null">work_pattern_id,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="userType != null">#{userType},</if>
+            <if test="employeeNumber != null">#{employeeNumber},</if>
+            <if test="name != null">#{name},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="workPatternId != null">#{workPatternId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateNdtWorkScheduling" parameterType="NdtWorkScheduling">
+        update ndt_work_scheduling
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="userType != null">user_type = #{userType},</if>
+            <if test="employeeNumber != null">employee_number = #{employeeNumber},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="workPatternId != null">work_pattern_id = #{workPatternId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteNdtWorkSchedulingById" parameterType="Long">
+        delete from ndt_work_scheduling where id = #{id}
+    </delete>
+
+    <delete id="deleteNdtWorkSchedulingByIds" parameterType="String">
+        delete from ndt_work_scheduling where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO ndt_work_scheduling (
+        user_id,
+        user_type,
+        employee_number,
+        name,
+        phone,
+        work_pattern_id,
+        create_by,
+        create_time,
+        update_by,
+        update_time
+        )
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.userId},
+            #{item.userType},
+            #{item.employeeNumber},
+            #{item.name},
+            #{item.phone},
+            #{item.workPatternId},
+            #{item.createBy},
+            #{item.createTime},
+            #{item.updateBy},
+            #{item.updateTime}
+            )
+        </foreach>
+    </insert>
+
+
+</mapper>

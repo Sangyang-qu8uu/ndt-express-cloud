@@ -26,7 +26,7 @@ import com.ruoyi.common.core.web.page.TableDataInfo;
 
 /**
  * 工作模式Controller
- * 
+ *
  * @author ruoyi
  * @date 2025-01-08
  */
@@ -103,5 +103,14 @@ public class NdtWorkPatternController extends BaseController
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(ndtWorkPatternService.deleteNdtWorkPatternByIds(ids));
+    }
+
+    /**
+     * 工作模式列表查询
+     * @return
+     */
+    @GetMapping("all")
+    public AjaxResult all() {
+        return success(ndtWorkPatternService.all());
     }
 }

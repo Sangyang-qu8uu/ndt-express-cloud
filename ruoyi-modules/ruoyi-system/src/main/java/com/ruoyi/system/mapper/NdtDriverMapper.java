@@ -6,25 +6,32 @@ import org.apache.ibatis.annotations.Param;
 
 /**
  * 司机管理Mapper接口
- * 
+ *
  * @author ruoyi
  * @date 2025-01-04
  */
-public interface NdtDriverMapper 
+public interface NdtDriverMapper
 {
 
 
     /**
      * 查询司机管理
-     * 
+     *
      * @param id 司机管理主键
      * @return 司机管理
      */
     public NdtDriver selectNdtDriverById(Long id);
+    /**
+     * 查询司机管理列表
+     *
+     * @param ndtDriver 司机管理
+     * @return 司机管理集合
+     */
+    public List<NdtDriver> list();
 
     /**
      * 查询司机管理列表
-     * 
+     *
      * @param ndtDriver 司机管理
      * @return 司机管理集合
      */
@@ -32,7 +39,7 @@ public interface NdtDriverMapper
 
     /**
      * 新增司机管理
-     * 
+     *
      * @param ndtDriver 司机管理
      * @return 结果
      */
@@ -40,7 +47,7 @@ public interface NdtDriverMapper
 
     /**
      * 修改司机管理
-     * 
+     *
      * @param ndtDriver 司机管理
      * @return 结果
      */
@@ -48,7 +55,7 @@ public interface NdtDriverMapper
 
     /**
      * 删除司机管理
-     * 
+     *
      * @param id 司机管理主键
      * @return 结果
      */
@@ -56,7 +63,7 @@ public interface NdtDriverMapper
 
     /**
      * 批量删除司机管理
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */

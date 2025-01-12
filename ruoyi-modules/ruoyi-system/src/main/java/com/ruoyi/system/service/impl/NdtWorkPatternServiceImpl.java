@@ -2,6 +2,7 @@ package com.ruoyi.system.service.impl;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.ruoyi.common.core.utils.DateUtils;
@@ -115,5 +116,13 @@ public class NdtWorkPatternServiceImpl implements INdtWorkPatternService
     public int deleteNdtWorkPatternById(Long id)
     {
         return ndtWorkPatternMapper.deleteNdtWorkPatternById(id);
+    }
+
+    @Override
+    public Map<String, List<NdtWorkPattern>> all() {
+        List<NdtWorkPattern> list = ndtWorkPatternMapper.list();
+        Map<String, List<NdtWorkPattern>> listMap = list.stream().collect(Collectors.groupingBy(NdtWorkPattern::getWorkPatternType));
+
+        return listMap;
     }
 }

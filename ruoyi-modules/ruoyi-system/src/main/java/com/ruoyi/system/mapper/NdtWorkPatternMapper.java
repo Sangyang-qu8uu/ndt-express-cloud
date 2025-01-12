@@ -5,15 +5,15 @@ import com.ruoyi.system.domain.NdtWorkPattern;
 
 /**
  * 工作模式Mapper接口
- * 
+ *
  * @author ruoyi
  * @date 2025-01-08
  */
-public interface NdtWorkPatternMapper 
+public interface NdtWorkPatternMapper
 {
     /**
      * 查询工作模式
-     * 
+     *
      * @param id 工作模式主键
      * @return 工作模式
      */
@@ -21,7 +21,7 @@ public interface NdtWorkPatternMapper
 
     /**
      * 查询工作模式列表
-     * 
+     *
      * @param ndtWorkPattern 工作模式
      * @return 工作模式集合
      */
@@ -29,7 +29,7 @@ public interface NdtWorkPatternMapper
 
     /**
      * 新增工作模式
-     * 
+     *
      * @param ndtWorkPattern 工作模式
      * @return 结果
      */
@@ -37,7 +37,7 @@ public interface NdtWorkPatternMapper
 
     /**
      * 修改工作模式
-     * 
+     *
      * @param ndtWorkPattern 工作模式
      * @return 结果
      */
@@ -45,7 +45,7 @@ public interface NdtWorkPatternMapper
 
     /**
      * 删除工作模式
-     * 
+     *
      * @param id 工作模式主键
      * @return 结果
      */
@@ -53,9 +53,15 @@ public interface NdtWorkPatternMapper
 
     /**
      * 批量删除工作模式
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
     public int deleteNdtWorkPatternByIds(Long[] ids);
+
+    /**
+     * 查询所有的工作模板
+     * @return
+     */
+    public List<NdtWorkPattern>list();
 }

@@ -5,24 +5,31 @@ import com.ruoyi.common.core.utils.StringUtils;
 
 /**
  * 定时任务调度测试
- * 
+ *
  * @author ruoyi
  */
 @Component("ryTask")
-public class RyTask
-{
-    public void ryMultipleParams(String s, Boolean b, Long l, Double d, Integer i)
-    {
+public class RyTask {
+
+    public void ryMultipleParams(String s, Boolean b, Long l, Double d, Integer i) {
         System.out.println(StringUtils.format("执行多参方法： 字符串类型{}，布尔类型{}，长整型{}，浮点型{}，整形{}", s, b, l, d, i));
     }
 
-    public void ryParams(String params)
-    {
+    public void ryParams(String params) {
         System.out.println("执行有参方法：" + params);
     }
 
-    public void ryNoParams()
-    {
+    public void ryNoParams() {
+        System.out.println("执行无参方法");
+    }
+
+    /**
+     * 初始化排班计划表，只在系统第一次执行
+     */
+    public void initWorkScheduling() {
+        // todo  初始化数据
+
+        // todo  有数据则更新数据即可
         System.out.println("执行无参方法");
     }
 }

@@ -22,12 +22,12 @@ import org.springframework.util.CollectionUtils;
 
 /**
  * 司机管理Service业务层处理
- * 
+ *
  * @author ruoyi
  * @date 2025-01-04
  */
 @Service
-public class NdtDriverServiceImpl implements INdtDriverService 
+public class NdtDriverServiceImpl implements INdtDriverService
 {
     @Autowired
     private NdtDriverMapper ndtDriverMapper;
@@ -37,7 +37,7 @@ public class NdtDriverServiceImpl implements INdtDriverService
 
     /**
      * 查询司机管理
-     * 
+     *
      * @param id 司机管理主键
      * @return 司机管理
      */
@@ -49,7 +49,7 @@ public class NdtDriverServiceImpl implements INdtDriverService
 
     /**
      * 查询司机管理列表
-     * 
+     *
      * @param ndtDriver 司机管理
      * @return 司机管理
      */
@@ -74,14 +74,14 @@ public class NdtDriverServiceImpl implements INdtDriverService
                     NdtDriverInfo ndtDriverInfo = ndtDriverInfoMapper.selectNdtDriverInfoByDriverId(driver.getId());
                     vo.setFlag(ObjectUtils.isNotEmpty(ndtDriverInfo));
                     //需要基本信息主键id
-                    vo.setDriverInfoId(ObjectUtils.isEmpty(ndtDriverInfo.getId())?null:ndtDriverInfo.getId());
+                    vo.setDriverInfoId(ObjectUtils.isEmpty(ndtDriverInfo)?null:ndtDriverInfo.getId());
                     return vo;
                 }).collect(Collectors.toList());
     }
 
     /**
      * 新增司机管理
-     * 
+     *
      * @param ndtDriver 司机管理
      * @return 结果
      */
@@ -95,7 +95,7 @@ public class NdtDriverServiceImpl implements INdtDriverService
 
     /**
      * 修改司机管理
-     * 
+     *
      * @param ndtDriver 司机管理
      * @return 结果
      */
@@ -109,7 +109,7 @@ public class NdtDriverServiceImpl implements INdtDriverService
 
     /**
      * 批量删除司机管理
-     * 
+     *
      * @param ids 需要删除的司机管理主键
      * @return 结果
      */
@@ -120,13 +120,15 @@ public class NdtDriverServiceImpl implements INdtDriverService
         // 如果删除司机，把司机相关的证件信息一并删除
         Long[] longs = ndtDriverInfoMapper.selectNdtDriverInfoByIds(Arrays.asList(ids)).stream()
                 .map(NdtDriverInfo::getDriverId).toArray(Long[]::new);
-        ndtDriverInfoMapper.deleteNdtDriverInfoByIds(longs);
+        if (ObjectUtils.isNotEmpty(longs)){
+            ndtDriverInfoMapper.deleteNdtDriverInfoByIds(longs);
+        }
         return ndtDriverMapper.deleteNdtDriverByIds(ids);
     }
 
     /**
      * 删除司机管理信息
-     * 
+     *
      * @param id 司机管理主键
      * @return 结果
      */

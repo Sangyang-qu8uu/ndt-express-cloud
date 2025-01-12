@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.NdtDriverMapper">
-    
+
     <resultMap type="NdtDriver" id="NdtDriverResult">
         <result property="id"    column="id"    />
         <result property="driverAccount"    column="driver_account"    />
@@ -23,14 +23,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectNdtDriverList" parameterType="NdtDriver" resultMap="NdtDriverResult">
         <include refid="selectNdtDriverVo"/>
-        <where>  
+        <where>
             <if test="driverAccount != null  and driverAccount != ''"> and driver_account = #{driverAccount}</if>
             <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
             <if test="courierName != null  and courierName != ''"> and courier_name like concat('%', #{courierName}, '%')</if>
             <if test="workStatus != null "> and work_status = #{workStatus}</if>
         </where>
     </select>
-    
+
     <select id="selectNdtDriverById" parameterType="Long" resultMap="NdtDriverResult">
         <include refid="selectNdtDriverVo"/>
         where id = #{id}
@@ -80,9 +80,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteNdtDriverByIds" parameterType="String">
-        delete from ndt_driver where id in 
+        delete from ndt_driver where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
+
+    <select id="list" resultMap="NdtDriverResult">
+        <include refid="selectNdtDriverVo"/>
+    </select>
 </mapper>
